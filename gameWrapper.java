@@ -1,3 +1,5 @@
+// Author: Andrew Mullin
+
 import java.util.ArrayList;
 import java.util.List;
 
