@@ -1,0 +1,19 @@
+{
+  "round-state-output-location": "./match-logs",
+  "game-config-file-location": "./default-config.json",
+  "game-engine-jar": "./lib/game-engine.jar",
+  "verbose-mode": false,
+  "max-runtime-ms": 100000,
+  "player-a": "./bots/pyBot1",
+  "player-b": "./bots/pyBot2",
+  "max-request-retries": 10,
+  "request-timeout-ms": 5000,
+  "is-tournament-mode": false,
+  "tournament": {
+    "connection-string": "",
+    "bots-container": "bot-source-code-container-qa",
+    "match-logs-container": "match-logs-container-qa",
+    "game-engine-container": "game-engine-container-qa",
+    "api-endpoint": "http://localhost"
+  }
+}
