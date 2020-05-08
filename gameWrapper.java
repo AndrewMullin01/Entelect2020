@@ -402,7 +402,7 @@ public class gameWrapper {
     mappy.resolvePlayerCollisions();
     mappy.commitStagedPositions();
     
-    posDifference = mappy.getPlayerBlockPosition(2).getBlockNumber() - mappy.getPlayerBlockPosition(1).getBlockNumber();
+    posDifference = mappy.getPlayerBlockPosition(1).getBlockNumber() - mappy.getPlayerBlockPosition(2).getBlockNumber();
     gameStatus = isGameWon();
   }
 
@@ -483,6 +483,15 @@ public class gameWrapper {
     return new gameDataOutput(conny, mappy, player);
   }
 
+  public int getPlayerLead(int player) {
+    if(player == 1){
+      return mappy.getPlayerBlockPosition(1).getBlockNumber() - mappy.getPlayerBlockPosition(2).getBlockNumber();
+    }
+    else{
+      return mappy.getPlayerBlockPosition(2).getBlockNumber() - mappy.getPlayerBlockPosition(1).getBlockNumber();
+    }
+  }
+
   public void newGame(int seed) throws Exception {
     this.gameStatus = 0;
     this.posDifference = 0;
@@ -508,21 +517,27 @@ public class gameWrapper {
 
     gameWrapper gw = new gameWrapper("");
 
-    gw.newGame(123);
-    gw.printRoundData();
-
-    while (gw.gameStatus == 0){
-      gw.tickGame(gw.decideMove(1), gw.conny.ACCELERATE_COMMAND());
-      if (gw.getMappy().getCurrentRound()%50==0){
-        gw.printRoundData();
+    
+    double sumAvgSpeeds = 0;
+    for (int i = 0; i < 1000; i++) {
+      int r = (int)(Math.random()*10000);
+      gw.newGame(r);
+      while (gw.gameStatus == 0){
+        gw.tickGame(gw.decideMove(1), gw.conny.ACCELERATE_COMMAND());
+        //if (gw.getMappy().getCurrentRound()%50==0){
+        //  gw.printRoundData();
+        //}
       }
+      sumAvgSpeeds += 1.0*gw.getGameData(2).pX/gw.getGameData(2).round;
+      gw.print(".");
     }
+    gw.print("\nAverage speed: " + sumAvgSpeeds/1000.0);
     
     //printPlayerStateData(gw.mappy, true);
     //gw.printMiniMap(gw.mappy.getPlayerBlockPosition(1).getBlockNumber(), 20);
     //gw.getGameData(1).printMapView(gw.conny);
     
-    gw.printRoundData();
+    //gw.printRoundData();
 
   }
 
